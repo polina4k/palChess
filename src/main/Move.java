@@ -24,7 +24,7 @@ public class Move {
         this.capture = board.getPiece(newCol, newRow);
 
     }
-
+    //warning: this is extremely inefficient but im too lazy to fix rn.
     public boolean linearCollision() { // looping over squares to check rook moves, returns true if there is a piece in the way
         int colDiff = newCol - oldCol;
         int rowDiff = newRow - oldRow;
@@ -100,6 +100,24 @@ public class Move {
                 if(board.getPiece(oldCol - i, oldRow + i) != null){
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public boolean queenCollision(){
+        int colDiff = newCol - oldCol;
+        int rowDiff = newRow - oldRow;
+
+        if(Math.abs(colDiff) == Math.abs(rowDiff)){
+            if(diagonalCollision()){
+                return true;
+            }
+        }
+
+        if(Math.abs(colDiff) == 0 ||  Math.abs(rowDiff) == 0 ){
+            if(linearCollision()){
+                return true;
             }
         }
         return false;

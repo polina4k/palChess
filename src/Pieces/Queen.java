@@ -26,19 +26,15 @@ public class Queen extends Piece {
         int dy = Math.abs(move.newRow - move.oldRow); //absolute values in change of y and x
         int dx = Math.abs(move.newCol - move.oldCol);
 
-        if(move.diagonalCollision()){
-            return false;
-        }
-        if(move.linearCollision()){
-            return false;
-        }
 
 
         if(!(dy == 0 || dx == 0) && !(dy == dx)){
             return false;
         }
 
-
+        if(move.queenCollision()){
+            return false;
+        }
 
         if (move.capture != null) {
             if (move.capture.isWhite == move.piece.isWhite) {
