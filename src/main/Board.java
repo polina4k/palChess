@@ -1,4 +1,5 @@
 package main;
+import Moves.Move;
 import Pieces.*;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class Board extends JPanel{
             this.addMouseMotionListener(inputPanel);
         }
         public void addPieces(){
-            pieceList.add(new Knight(this, 1, 0, false)); //adding piece class to arraylist
+            pieceList.add(new Knight(this, 1, 0, false));
             pieceList.add(new Knight(this, 6, 0, false));
             pieceList.add(new Knight(this, 1, 7, true));
             pieceList.add(new Knight(this, 6, 7, true));
@@ -55,9 +56,11 @@ public class Board extends JPanel{
             }
             return null;
         }
+
         public void removePiece(Piece piece){
             pieceList.remove(piece);
         }
+
         public void makeMove(Move move){
             selectedPiece.col = move.newCol;
             selectedPiece.row = move.newRow;

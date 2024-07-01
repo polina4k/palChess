@@ -1,6 +1,6 @@
 package Pieces;
 import main.Board;
-import main.Move;
+import Moves.Move;
 
 import java.awt.image.BufferedImage;
 public class Pawn extends Piece {

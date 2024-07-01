@@ -1,6 +1,7 @@
-package main;
+package Moves;
 
 import Pieces.Piece;
+import main.Board;
 
 public class Move {
     public int oldCol;

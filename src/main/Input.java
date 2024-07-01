@@ -1,11 +1,10 @@
 package main;
 
+import Moves.Move;
 import Pieces.Piece;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 //mouse event handler
 public class Input extends MouseAdapter {

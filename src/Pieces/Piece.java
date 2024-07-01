@@ -1,7 +1,7 @@
 package Pieces;
 
 import main.Board;
-import main.Move;
+import Moves.Move;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
