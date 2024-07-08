@@ -5,29 +5,37 @@ import Pieces.Piece;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 //mouse event handler
 public class Input extends MouseAdapter {
     Board board;
-    public Input (Board board){
+    GameState gameState;
+
+    public Input (Board board, GameState gameState){
         this.board = board;
+        this.gameState = gameState;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(gameState.isPlayerSelected) {
+            int col = e.getX() / board.tileSize;
+            int row = e.getY() / board.tileSize;
 
-        int col = e.getX() / board.tileSize;
-        int row = e.getY() / board.tileSize;
+            Piece curPiece = board.getPiece(col, row);
 
-
-        Piece curPiece = board.getPiece(col,row);
-
-        if (curPiece != null){
-            board.selectedPiece = curPiece;
-           // System.out.println(board.selectedPiece.col);
-           // System.out.println(board.selectedPiece.row);
-            //System.out.println(board.selectedPiece.name);
+            if (curPiece != null) {
+                if((curPiece.isWhite && gameState.curPlayer == Player.WHITE) || (!curPiece.isWhite && gameState.curPlayer == Player.BLACK)) {
+                    board.selectedPiece = curPiece;
+                    ArrayList<Move> legalMoves = board.getLegalMoves(curPiece);
+                }
+            }
         }
+        else{
+            System.out.println("Please select player");
+        }
+
     }
 
     @Override
@@ -45,6 +53,7 @@ public class Input extends MouseAdapter {
                 board.makeMove(move);
                 board.repaint();
                 board.selectedPiece = null;
+                gameState.curPlayer = Player.next(gameState.curPlayer);
             }
             else{
 

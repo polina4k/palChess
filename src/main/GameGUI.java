@@ -1,14 +1,14 @@
 package main;
 import javax.swing.JFrame;
 import java.awt.*;
-
-public class TestFrame {
+//currently gameGUI is a mess, half of it is in the board class
+public class GameGUI {
     private JFrame frame;
     private int width;
     private int height;
     private GridBagConstraints gbc = new GridBagConstraints();
 
-    public TestFrame(int width, int height){
+    public GameGUI(int width, int height){
         frame = new JFrame();
         this.width = width;
         this.height = height;

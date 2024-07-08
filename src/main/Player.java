@@ -1,5 +1,5 @@
 package main;
-
+//store data related to players
 public enum Player {
     WHITE,
     BLACK;
@@ -16,7 +16,7 @@ public enum Player {
         return null;
     }
 
-
+//player selection
     static Player toChar(char c){
         Character ch = Character.toUpperCase(c);
         switch(ch){

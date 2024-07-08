@@ -1,23 +1,29 @@
 package main;
-import javax.swing.*;
-import java.awt.*;
 
 import Moves.Move;
-import Pieces.*;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        TestFrame frame = new TestFrame(800, 800); //can just use a regular JFrame, TestFrame class is redundant
-        Board board = new Board();
-        frame.add(board);
-        frame.setUpGUI();
+
 
         System.out.println("Type W to play White, B to play Black");
         Scanner scanner = new Scanner(System.in);
         Player player = Player.toChar(scanner.next().charAt(0));
-        Player curPlayer = Player.WHITE; //initial game always starts w white
+        /*
+        * currently only working on move alternation, later will implement single player vs ai
+        * */
+        Player curPlayer = player;
+        GameState gameState = new GameState(curPlayer);
+
+        GameGUI frame = new GameGUI(800, 800);
+        Board board = new Board(gameState);
+        frame.add(board);
+        frame.setUpGUI();
+
+
 
         //let first move be e4 if player chooses to play black for now
         if(player == Player.BLACK) {
@@ -25,18 +31,6 @@ public class Main {
             Move e4 = new Move(board, board.getPiece(4,6), 4,4);
             board.makeMove(e4);
         }
-
-        int i = 0;
-        while(i<10){//simulate 10 moves
-                curPlayer = Player.next(curPlayer);
-
-                i++;
-        }
-
-
-
-
-
 
 
 

@@ -13,10 +13,10 @@ public class Board extends JPanel{
     ArrayList<Piece> pieceList = new ArrayList<>();
     Piece selectedPiece;
 
-        public Board(){
+        public Board(GameState gameState){
             this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
             addPieces();
-            Input inputPanel =  new Input(this);
+            Input inputPanel =  new Input(this,gameState);
             this.addMouseListener(inputPanel);
             this.addMouseMotionListener(inputPanel);
         }
@@ -55,6 +55,21 @@ public class Board extends JPanel{
                 }
             }
             return null;
+        }
+        //im not sure if there's a more efficient way to do this vv
+        public ArrayList<Move> getLegalMoves(Piece piece){
+            ArrayList<Move> legalMoves = new ArrayList<>();
+            for(int c = 0; c < cols; c++){
+                for(int r = 0; r < rows; r++){
+                    Move tempMove = new Move(this, piece, c, r);
+                    if(piece.isValidMove(tempMove)){
+                        legalMoves.add(tempMove);
+                    }
+                }
+            }
+
+            return legalMoves;
+
         }
 
         public void removePiece(Piece piece){
