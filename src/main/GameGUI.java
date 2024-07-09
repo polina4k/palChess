@@ -3,9 +3,9 @@ import javax.swing.JFrame;
 import java.awt.*;
 //currently gameGUI is a mess, half of it is in the board class
 public class GameGUI {
-    private JFrame frame;
-    private int width;
-    private int height;
+    final private JFrame frame;
+    final private int width;
+    final private int height;
     private GridBagConstraints gbc = new GridBagConstraints();
 
     public GameGUI(int width, int height){

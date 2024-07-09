@@ -56,6 +56,27 @@ public class Board extends JPanel{
             }
             return null;
         }
+
+        public ArrayList<Piece> getWhitePieces(){
+            ArrayList<Piece> whitePieces = new ArrayList<>();
+            for (Piece piece : pieceList) {
+                if (piece.isWhite) {
+                    whitePieces.add(piece);
+                }
+            }
+            return whitePieces;
+        }
+
+        public ArrayList<Piece> getBlackPieces(){
+            ArrayList<Piece> blackPieces = new ArrayList<>();
+            for (Piece piece : pieceList) {
+                if (!piece.isWhite) {
+                    blackPieces.add(piece);
+                }
+            }
+            return blackPieces;
+        }
+
         //im not sure if there's a more efficient way to do this vv
         public ArrayList<Move> getLegalMoves(Piece piece){
             ArrayList<Move> legalMoves = new ArrayList<>();
@@ -71,6 +92,8 @@ public class Board extends JPanel{
             return legalMoves;
 
         }
+
+
 
         public void removePiece(Piece piece){
             pieceList.remove(piece);

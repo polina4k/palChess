@@ -26,9 +26,9 @@ public class Input extends MouseAdapter {
             Piece curPiece = board.getPiece(col, row);
 
             if (curPiece != null) {
-                if((curPiece.isWhite && gameState.curPlayer == Player.WHITE) || (!curPiece.isWhite && gameState.curPlayer == Player.BLACK)) {
+                if((curPiece.isWhite && gameState.curPlayer.isWhite) || (!curPiece.isWhite && !gameState.curPlayer.isWhite)) {
                     board.selectedPiece = curPiece;
-                    ArrayList<Move> legalMoves = board.getLegalMoves(curPiece);
+                    //ArrayList<Move> legalMoves = board.getLegalMoves(curPiece);
                 }
             }
         }
@@ -46,6 +46,7 @@ public class Input extends MouseAdapter {
         if(board.selectedPiece != null){
             Move move = new Move(board,board.selectedPiece, col, row);
             if(board.selectedPiece.isValidMove(move)) {
+
                 if (board.getPiece(col, row) != null) {
                     move.capture = board.getPiece(col, row);
                 }
@@ -54,6 +55,12 @@ public class Input extends MouseAdapter {
                 board.repaint();
                 board.selectedPiece = null;
                 gameState.curPlayer = Player.next(gameState.curPlayer);
+                if(gameState.kingInCheck()){
+                    System.out.println("King in check");
+                }
+                else{
+                    System.out.println("King not in check");
+                }
             }
             else{
 
@@ -72,7 +79,7 @@ public class Input extends MouseAdapter {
         // Update image position to follow the mouse cursor
        if(board.selectedPiece != null){
            board.selectedPiece.xPos = e.getX() - board.tileSize/2;//center
-           board.selectedPiece.yPos = e.getY() - board.tileSize/2;;
+           board.selectedPiece.yPos = e.getY() - board.tileSize/2;
            board.repaint();
        }
 

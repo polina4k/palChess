@@ -1,9 +1,13 @@
 package main;
 //store data related to players
 public enum Player {
-    WHITE,
-    BLACK;
+    WHITE (true),
+    BLACK (false);
+    final boolean isWhite;
 
+    Player(boolean isWhite) {
+        this.isWhite = isWhite;
+    }
     public static Player next(Player p) {
         switch(p){
             case WHITE -> {
