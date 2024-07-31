@@ -1,6 +1,6 @@
 package Pieces;
-import main.Board;
 import Moves.Move;
+import main.Board;
 
 import java.awt.image.BufferedImage;
 
@@ -17,6 +17,9 @@ public class Rook extends Piece {
         this.isFirstMove = true;
 
         this.sprite = sheet.getSubimage(4 * scale, isWhite ? 0 : scale, scale, scale).getScaledInstance(scale, scale, BufferedImage.SCALE_SMOOTH);
+
+    }
+    public Rook(){
 
     }
 

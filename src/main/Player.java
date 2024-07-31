@@ -20,7 +20,9 @@ public enum Player {
         return null;
     }
 
-//player selection
+    /*
+    Player selection
+     */
     static Player toChar(char c){
         Character ch = Character.toUpperCase(c);
         switch(ch){
@@ -34,15 +36,6 @@ public enum Player {
             }
             default -> throw new IllegalArgumentException("Invalid character: " + c);
 
-
-
         }
-
-
-
-
-
     }
-
-
 }

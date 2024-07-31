@@ -1,16 +1,21 @@
 package main;
 
+import Moves.Castle;
+import Moves.CastleType;
 import Moves.Move;
 import Pieces.Piece;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-//mouse event handler
+/*
+Mouse event handler:
+ */
+
 public class Input extends MouseAdapter {
     Board board;
     GameState gameState;
+
 
     public Input (Board board, GameState gameState){
         this.board = board;
@@ -44,23 +49,33 @@ public class Input extends MouseAdapter {
         int row = e.getY() / board.tileSize;
 
         if(board.selectedPiece != null){
-            Move move = new Move(board,board.selectedPiece, col, row);
-            if(board.selectedPiece.isValidMove(move)) {
-
+            Move move = new Move(board,board.selectedPiece, col, row, gameState);
+            if(move.isValidMove()) {
                 if (board.getPiece(col, row) != null) {
                     move.capture = board.getPiece(col, row);
                 }
 
-                board.makeMove(move);
+                move.makeMove();
                 board.repaint();
                 board.selectedPiece = null;
                 gameState.curPlayer = Player.next(gameState.curPlayer);
-                if(gameState.kingInCheck()){
+                /*
+                DEBUG:
+
+                if (gameState.kingInCheck()) {
                     System.out.println("King in check");
-                }
-                else{
+                } else {
                     System.out.println("King not in check");
-                }
+                }*/
+            }
+            else if(move.validCastleMove()) {
+                Castle castleMove = new Castle(board,board.selectedPiece, col, row, gameState);
+                castleMove.makeMove();
+                System.out.print(castleMove.castleType);
+                board.selectedPiece = null;
+                board.repaint();
+                gameState.curPlayer = Player.next(gameState.curPlayer);
+
             }
             else{
 
@@ -74,9 +89,12 @@ public class Input extends MouseAdapter {
         }
     }
 
+
     @Override
     public void mouseDragged(MouseEvent e) {
-        // Update image position to follow the mouse cursor
+        /*
+        Update image position to follow the mouse cursor
+         */
        if(board.selectedPiece != null){
            board.selectedPiece.xPos = e.getX() - board.tileSize/2;//center
            board.selectedPiece.yPos = e.getY() - board.tileSize/2;

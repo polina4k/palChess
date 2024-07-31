@@ -1,9 +1,12 @@
 package Pieces;
-import main.Board;
 import Moves.Move;
+import main.Board;
 
 import java.awt.image.BufferedImage;
+
 public class Pawn extends Piece {
+
+    public boolean hasEnPassantRights;
     public Pawn(Board board, int col, int row, boolean isWhite) {
         this.board = board;
         this.col = col;
@@ -14,6 +17,7 @@ public class Pawn extends Piece {
         this.name = "Pawn";
         this.value = 1;
         this.isFirstMove = true;
+
 
         this.sprite = sheet.getSubimage(scale * 5, isWhite ? 0 : scale, scale, scale).getScaledInstance(scale, scale, BufferedImage.SCALE_SMOOTH);
 

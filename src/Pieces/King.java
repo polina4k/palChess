@@ -1,6 +1,6 @@
 package Pieces;
-import main.Board;
 import Moves.Move;
+import main.Board;
 
 import java.awt.image.BufferedImage;
 public class King extends Piece {
@@ -17,11 +17,20 @@ public class King extends Piece {
         this.sprite = sheet.getSubimage(0, isWhite ? 0 : scale, scale, scale).getScaledInstance(scale, scale, BufferedImage.SCALE_SMOOTH);
 
     }
+    public King (){
+
+    }
 
     @Override
     public boolean isValidMove(Move move) {
-        int dy = Math.abs(move.newRow - move.oldRow); //absolute values in change of y and x
+        int dy = Math.abs(move.newRow - move.oldRow);
         int dx = Math.abs(move.newCol - move.oldCol);
+
+        //castling check
+        /*
+        if(move.capture instanceof Rook && (move.capture.isWhite == this.isWhite)){
+
+        }*/
         if(!((dy == 1 && dx == 0) || (dx == 1 && dy == 0) || (dx == 1 && dy == 1))){
             return false;
         }
@@ -33,4 +42,6 @@ public class King extends Piece {
         }
         return true;
     }
+
+
 }

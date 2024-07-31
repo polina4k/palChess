@@ -1,6 +1,6 @@
 package Pieces;
-import main.Board;
 import Moves.Move;
+import main.Board;
 
 import java.awt.image.BufferedImage;
 public class Bishop extends Piece {

@@ -1,17 +1,20 @@
 package main;
+import Moves.Castle;
 import Moves.Move;
 import Pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Board extends JPanel{
     public int tileSize = 85;
     int cols = 8;
     int rows = 8;
-    ArrayList<Piece> pieceList = new ArrayList<>();
-    Piece selectedPiece;
+    GameState gameState;
+    HashSet<Piece> pieceList = new HashSet<>();
+    public Piece selectedPiece;
 
         public Board(GameState gameState){
             this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
@@ -19,6 +22,7 @@ public class Board extends JPanel{
             Input inputPanel =  new Input(this,gameState);
             this.addMouseListener(inputPanel);
             this.addMouseMotionListener(inputPanel);
+            this.gameState = gameState;
         }
         public void addPieces(){
             pieceList.add(new Knight(this, 1, 0, false));
@@ -82,10 +86,14 @@ public class Board extends JPanel{
             ArrayList<Move> legalMoves = new ArrayList<>();
             for(int c = 0; c < cols; c++){
                 for(int r = 0; r < rows; r++){
-                    Move tempMove = new Move(this, piece, c, r);
-                    if(piece.isValidMove(tempMove)){
+                    Move tempMove = new Move(this, piece, c, r,gameState);
+                    if(tempMove.isValidMove()){
                         legalMoves.add(tempMove);
                     }
+                   /* else if(tempMove.validCastleMove()){
+                        Castle castleMove = new Castle(this, piece, c, r,gameState);
+                        legalMoves.add(castleMove);
+                    }*/
                 }
             }
 
@@ -99,19 +107,11 @@ public class Board extends JPanel{
             pieceList.remove(piece);
         }
 
-        public void makeMove(Move move){
-            selectedPiece.col = move.newCol;
-            selectedPiece.row = move.newRow;
-            selectedPiece.xPos = move.newCol * tileSize;
-            selectedPiece.yPos = move.newRow * tileSize;
-
-            if(move.capture!= null){
-                removePiece(move.capture);
-            }
-            if(move.piece.isFirstMove){
-                move.piece.isFirstMove = false;
-            }
-
+        public void changePiecePosition(Piece piece, int newCol, int newRow){
+            piece.col = newCol;
+            piece.row = newRow;
+            piece.xPos = newCol * tileSize;
+            piece.yPos = newRow * tileSize;
         }
 
         public void paintComponent (Graphics g){
@@ -127,7 +127,8 @@ public class Board extends JPanel{
             if(selectedPiece != null){
                 for(int c = 0; c < cols; c++){
                     for(int r = 0; r < rows; r++){
-                        if(selectedPiece.isValidMove(new Move(this, selectedPiece, c, r))){
+                        Move tempMove = new Move(this, selectedPiece, c, r,gameState);
+                        if(tempMove.isValidMove()){
                             g2D.setColor(new Color(248, 58, 78, 81));
                             g2D.fillRect(c*tileSize, r*tileSize, tileSize, tileSize);
                         }
